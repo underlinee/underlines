@@ -15,8 +15,11 @@ class TestBookFinder(TestCase):
             assert len(isbn13) == 13
 
     def test_save(self):
+        ## Given
         book.init_db()
         found = book.find("9791160560367")
+        ## When
         book.save(found)
+        ## Then
         saved = book.get("9791160560367")
         assert saved['title'] == "말이 칼이 될 때 - 혐오표현은 무엇이고 왜 문제인가?"

@@ -24,7 +24,7 @@ def _aladin_response_to_json(response):
     dict_book = json.loads(json_string)
     return dict_book['item'][0]
 
-def init_db():
+def init_table():
     sql = "DELETE FROM book"
     sqltemplate.execute(sql)
 
@@ -36,4 +36,4 @@ def get(isbn13):
 def save(book):
     sql = "INSERT INTO book(isbn, isbn13, title, author, publisher, cover) VALUES(%s, %s, %s, %s, %s, %s)"
     parameters = [ book['isbn'], int(book['isbn13']), book['title'], book['author'], book['publisher'], book['cover'] ]
-    sqltemplate.execute(sql, parameters)
+    return sqltemplate.execute(sql, parameters)

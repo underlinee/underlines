@@ -21,9 +21,12 @@ def execute(sql, parameters=None):
     conn = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
     curs = conn.cursor()
     if parameters is None:
-        result = curs.execute(sql)
+        curs.execute(sql)
     else:
-        result = curs.execute(sql, parameters)
+        curs.execute(sql, parameters)
+    lastid_sql = "SELECT LAST_INSERT_ID()"
+    curs.execute(lastid_sql)
+    lastid = curs.fetchone()
     conn.commit()
     conn.close()
-    return result
+    return lastid[0]
