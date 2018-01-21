@@ -5,7 +5,7 @@ from underlines import book
 class TestBookFinder(TestCase):
 
     def test_find(self):
-         found = book.find("9791160560367")
+         found = book.find_by_isbn13("9791160560367")
          assert found['title'] == "말이 칼이 될 때 - 혐오표현은 무엇이고 왜 문제인가?"
 
     def test_find_blogbest_isbn13(self):
@@ -17,7 +17,7 @@ class TestBookFinder(TestCase):
     def test_save(self):
         ## Given
         book.init_db()
-        found = book.find("9791160560367")
+        found = book.find_by_isbn13("9791160560367")
         ## When
         book.save(found)
         ## Then

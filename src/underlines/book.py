@@ -3,8 +3,7 @@
 import requests
 import json
 
-from underlines.common import config
-from underlines.common import sqltemplate
+from underlines.common import sqltemplate, config
 
 TTB_KEY = config.get('TTB_KEY')
 
@@ -14,15 +13,15 @@ def find_blogbest_isbn13():
     isbns13 = [item.get('isbn13') for item in response.json().get('item')]
     return isbns13
 
-def find(isbn13):
+def find_by_isbn13(isbn13):
     response = requests.get("http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={}&itemIdType=ISBN13&ItemId={}&output=JS&cover=big".format(TTB_KEY, isbn13))
     book = _aladin_response_to_json(response)
     return book
 
 def _aladin_response_to_json(response):
     json_string = response.text.strip(';')
-    dict_book = json.loads(json_string)
-    return dict_book['item'][0]
+    book_dict = json.loads(json_string, strict=False)
+    return book_dict['item'][0]
 
 def init_table():
     sql = "DELETE FROM book"

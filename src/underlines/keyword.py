@@ -1,12 +1,16 @@
 #!/usr/bin/env python
-from underlines.common import sqltemplate
+from underlines.common import sqltemplate, config
+
+credentials_path = config.get("GOOGLE_APPLICATION_CREDENTIALS")
 
 def find_keyword(underline, keyword_count):
     from google.cloud import language
     from google.cloud.language import enums
     from google.cloud.language import types
+    from google.oauth2 import service_account
 
-    client = language.LanguageServiceClient()
+    credentials = service_account.Credentials.from_service_account_file(credentials_path)
+    client = language.LanguageServiceClient(credentials=credentials)
 
     document = types.Document(
         content=underline,
@@ -21,9 +25,16 @@ def save(underline_id, keyword):
     parameters = [ underline_id, keyword ]
     return sqltemplate.execute(sql, parameters)
 
-def get(id):
-    sql = "SELECT * FROM keyword WHERE id=%s"
-    return sqltemplate.selectone(sql, id)
+def get_by_underline_id(underline_id):
+    sql = "SELECT * FROM keyword WHERE underline_id=%s"
+    return sqltemplate.selectone(sql, underline_id)
+
+def get_by_isbn13(book_id):
+    sql = """SELECT keyword. * FROM keyword 
+                    INNER JOIN underline ON underline.id = keyword.underline_id
+                    INNER JOIN book ON book.id = underline.book_id 
+                    WHERE book.isbn13 = %s"""
+    return sqltemplate.selectall(sql, book_id)
 
 def init_table():
     sql = "DELETE FROM keyword"

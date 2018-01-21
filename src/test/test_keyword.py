@@ -22,11 +22,11 @@ class TestKeywordFinder(TestCase):
         underline.init_table()
         book.init_table()
         ## Given
-        found = book.find("9791160560367")
+        found = book.find_by_isbn13("9791160560367")
         book.save(found)
         underline_id = underline.save("9791160560367", "underline")
         ## When
         keyword_id= keyword.save(underline_id, "키워드")
         ## Then
-        saved = keyword.get(keyword_id)
-        assert saved['keyword'] == "키워"
+        saved = keyword.get_by_isbn13("9791160560367")
+        assert saved['keyword'] == "키워드"

@@ -17,6 +17,15 @@ def selectone(sql, parameters):
     conn.close()
     return row
 
+def selectall(sql, parameters):
+    conn = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
+    curs = conn.cursor(pymysql.cursors.DictCursor)
+    curs.execute(sql, parameters)
+    rows = curs.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
+
 def execute(sql, parameters=None):
     conn = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
     curs = conn.cursor()
