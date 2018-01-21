@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from underlines import book
 
-class TestBookFinder(TestCase):
+class TestBook(TestCase):
 
     def test_find(self):
          found = book.find_by_isbn13("9791160560367")

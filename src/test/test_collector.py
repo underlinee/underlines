@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from underlines import collector, keyword, underline, book
 
-class TestCollect(TestCase):
+class TestCollector(TestCase):
     def test_collect(self):
         # Init
         keyword.init_table()

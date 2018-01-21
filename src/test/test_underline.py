@@ -3,7 +3,7 @@ from unittest import TestCase
 from underlines import underline, book
 
 
-class TestUnderlineFinder(TestCase):
+class TestUnderline(TestCase):
 
     def test_find_underlines(self):
         underlines = underline.find_underlines("9788960516175")

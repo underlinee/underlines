@@ -215,3 +215,4 @@ pyvenv.cfg
 ### Custom ###
 .idea
 *.ini
+resources/*.model
