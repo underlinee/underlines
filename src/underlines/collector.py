@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
-from underlines import book, underline, keyword
-
+from underlines.domain import book, keyword, underline
 
 
 def collect(isbn13):
     book_dict = book.find_by_isbn13(isbn13)
     book.save(book_dict)
 
-    underlines = underline.find_underlines( book_dict['isbn13'])
+    underlines = underline.find_underlines(book_dict['isbn13'])
 
     for line in underlines :
         underline_id = underline.save(book_dict['isbn13'], line)

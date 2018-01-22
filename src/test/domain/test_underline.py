@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from underlines import underline, book
+from underlines.domain import book, underline
 
 
 class TestUnderline(TestCase):
