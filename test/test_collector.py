@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from underlines import collector
-from underlines.domain import book, keyword, underline
+from underlines.domain import underline, book, keyword
 
 
 class TestCollector(TestCase):

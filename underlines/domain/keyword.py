@@ -17,8 +17,18 @@ def find_keyword(underline, keyword_count):
         type=enums.Document.Type.PLAIN_TEXT)
 
     response = client.analyze_entities(document=document, encoding_type=enums.EncodingType.UTF8)
-    keywords = [entity.name for entity in response.entities[:keyword_count] if entity.salience > 0.05]
+    entities = _remove_duplicated_name(response.entities)
+    keywords = [entity.name for entity in entities[:keyword_count] if entity.salience > 0.05]
     return keywords
+
+def _remove_duplicated_name(entities):
+    names = set()
+    unique_entities = []
+    for entity in entities:
+        if entity.name not in names:
+            unique_entities.append(entity)
+            names.add(entity.name)
+    return unique_entities
 
 def save(underline_id, keyword):
     sql = "INSERT INTO keyword(underline_id, keyword) VALUES (%s, %s)"

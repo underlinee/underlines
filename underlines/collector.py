@@ -2,7 +2,6 @@
 
 from underlines.domain import book, keyword, underline
 
-
 def collect(isbn13):
     book_dict = book.find_by_isbn13(isbn13)
     book.save(book_dict)
@@ -15,5 +14,3 @@ def collect(isbn13):
 
         for word in keywords:
             keyword.save(underline_id, word)
-
-
