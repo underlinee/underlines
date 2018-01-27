@@ -5,8 +5,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
 import __root__
 
-if 'UNDERLINE_MODE' in os.environ:
-    mode = os.environ['UNDERLINE_MODE']
+if 'UNDERLINES_MODE' in os.environ:
+    mode = os.environ['UNDERLINES_MODE']
 else:
     mode = "DEFAULT"
 

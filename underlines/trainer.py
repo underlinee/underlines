@@ -4,10 +4,11 @@ import json
 from gensim.models import word2vec
 
 from underlines.common import config
+import __root__
 
-STOPWORDS = json.load(open('../../resources/stopwords.json', 'rt', encoding='utf-8'))
+STOPWORDS = json.load(open(__root__.path() + '/resources/stopwords.json', 'rt', encoding='utf-8'))
 VAILD_POS = ("Noun", "Adjective", "Verb")
-MODEL_PATH = config.get("MODEL_PATH")
+MODEL_PATH = __root__.path() + config.get("MODEL_PATH")
 
 def train(sentences):
     model = word2vec.Word2Vec.load(MODEL_PATH)

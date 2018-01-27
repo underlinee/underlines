@@ -17,10 +17,25 @@ def selectone(sql, parameters):
     conn.close()
     return row
 
-def selectall(sql, parameters):
+def selectall(sql, parameters=None):
     conn = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
     curs = conn.cursor(pymysql.cursors.DictCursor)
-    curs.execute(sql, parameters)
+    if parameters is None:
+        curs.execute(sql)
+    else:
+        curs.execute(sql, parameters)
+    rows = curs.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
+
+def selectall_by_list(sql, parameters=None):
+    conn = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
+    curs = conn.cursor()
+    if parameters is None:
+        curs.execute(sql)
+    else:
+        curs.execute(sql, parameters)
     rows = curs.fetchall()
     conn.commit()
     conn.close()

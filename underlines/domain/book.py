@@ -19,7 +19,7 @@ def find_by_isbn13(isbn13):
     return book
 
 def _aladin_response_to_json(response):
-    json_string = response.text.strip(';')
+    json_string = response.text.strip(';').replace('\\\'', "'")
     book_dict = json.loads(json_string, strict=False)
     return book_dict['item'][0]
 

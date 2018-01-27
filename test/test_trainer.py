@@ -3,6 +3,7 @@ from unittest import TestCase
 
 from underlines import trainer
 from underlines.common import config
+from underlines.domain import underline
 sentences = ["""인간의 왕조가 흥망성쇠를 거듭하는 동안 이 작은 씨앗은 미래에 대한 희망을 버리지 않고 고집스럽게 버틴 것이다.    
                     그러다가 어느 날 그 작은 식물의 열망이 어느 실험실 안에서 활짝 피었다. 그 연꽃은 지금 어디 있을까. 모든 시작은 기다림의 끝이다.
                     우리는 모두 단 한 번의 기회를 만난다. 우리는 모두 한 사람 한 사람 불가능하면서도 필연적인 존재들이다. 
@@ -30,3 +31,8 @@ class TestTrain(TestCase):
 
     def test_is_valid_token(self):
         assert trainer._is_valid_token(("여사", "Noun")) == True
+
+    def test_get_underlines_all(self):
+        underlines = underline.get_underlines_all()
+        assert type(underlines) is list
+        assert type(underlines[0]) is str
