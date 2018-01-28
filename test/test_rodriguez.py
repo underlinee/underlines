@@ -1,9 +1,9 @@
 import os
 from unittest import TestCase
 
-from underlines import trainer
+from underlines import rodriguez
 from underlines.common import config
-from underlines.domain import underline
+from underlines.domain import book
 sentences = ["""인간의 왕조가 흥망성쇠를 거듭하는 동안 이 작은 씨앗은 미래에 대한 희망을 버리지 않고 고집스럽게 버틴 것이다.    
                     그러다가 어느 날 그 작은 식물의 열망이 어느 실험실 안에서 활짝 피었다. 그 연꽃은 지금 어디 있을까. 모든 시작은 기다림의 끝이다.
                     우리는 모두 단 한 번의 기회를 만난다. 우리는 모두 한 사람 한 사람 불가능하면서도 필연적인 존재들이다. 
@@ -17,22 +17,28 @@ MODEL_PATH = config.get("MODEL_PATH")
 
 class TestTrain(TestCase):
     def test_train(self):
+        rodri = rodriguez.Rodriguez()
         if not os.path.exists(MODEL_PATH):
-            trainer.build(sentences)
-        trainer.train(sentences)
+            rodri.build(sentences)
+        rodri.train(sentences)
 
     def test_build(self):
+        rodri = rodriguez.Rodriguez()
         if os.path.exists(MODEL_PATH):
             os.remove(MODEL_PATH)
-        trainer.build(sentences)
+        rodri.build(sentences)
 
     def test_is_valid_token_invalid(self):
-        assert trainer._is_valid_token(("TEST", "INVALID")) == False
+        assert rodriguez._is_valid_token(("TEST", "INVALID")) == False
 
     def test_is_valid_token(self):
-        assert trainer._is_valid_token(("여사", "Noun")) == True
+        assert rodriguez._is_valid_token(("여사", "Noun")) == True
 
     def test_get_underlines_all(self):
-        underlines = underline.get_underlines_all()
-        assert type(underlines) is list
-        assert type(underlines[0]) is str
+        descriptions = book.get_descriptions()
+
+        rodri = rodriguez.Rodriguez()
+        rodri.build(descriptions)
+
+        rodri.show_me_your_brain()
+        print(rodri.ask("성장"))

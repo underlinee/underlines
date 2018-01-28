@@ -24,3 +24,8 @@ class TestBook(TestCase):
         ## Then
         saved = book.get("9791160560367")
         assert saved['title'] == "말이 칼이 될 때 - 혐오표현은 무엇이고 왜 문제인가?"
+
+    def test_find_description(self):
+        found = book.find_by_isbn13("9791160560367")
+        description = book.find_description(found['isbn'])
+        assert type(description) is str
