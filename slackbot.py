@@ -1,6 +1,11 @@
 import time
 import re
+import os
+
+import logging.config
 from slackclient import SlackClient
+
+import __root__
 from underlines.common import config
 from underlines import collector
 
@@ -36,9 +41,13 @@ def handle_command(command, channel):
         text=response or default_response
     )
 
+
+
 if __name__ == "__main__":
+    logging.config.fileConfig(os.path.join(__root__.path(), 'logging_config.ini'))
+    log = logging.getLogger()
     if slack_client.rtm_connect(with_team_state=False):
-        print("Starter Bot connected and running!")
+        log.info("Starter Bot connected and running!")
         starterbot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
             command, channel = parse_bot_commands(slack_client.rtm_read())
