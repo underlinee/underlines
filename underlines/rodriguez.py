@@ -22,7 +22,7 @@ class Rodriguez:
         self.model.save(MODEL_PATH)
 
     def build(self, sentences):
-        model = word2vec.Word2Vec(_tokenize(sentences), size=50, window=3, min_count=10, workers=4, iter=10, sg=1)
+        model = word2vec.Word2Vec(_tokenize(sentences), size=100, window=3, min_count=10, workers=4, iter=100, sg=1)
         model.init_sims(replace=True)
         model.save(MODEL_PATH)
         self.model = model

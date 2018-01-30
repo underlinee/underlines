@@ -41,4 +41,4 @@ class TestTrain(TestCase):
         rodri.build(descriptions)
 
         rodri.show_me_your_brain()
-        print(rodri.ask("성장"))
+        print(rodri.ask("맛"))

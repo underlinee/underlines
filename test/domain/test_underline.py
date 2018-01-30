@@ -6,14 +6,9 @@ from underlines.domain import underline, book
 class TestUnderline(TestCase):
 
     def test_find_underlines(self):
-        underlines = underline.find_underlines("9788960516175")
+        underlines = underline.find_underlines("8960516171")
         assert type(underlines) is list
         assert type(underlines[0]) is str
-
-    def test_find_underlines_empty(self):
-        underlines = underline.find_underlines("9791157061105")
-        assert type(underlines) is list
-        assert len(underlines) == 0
 
     def test_save(self):
         ## Given

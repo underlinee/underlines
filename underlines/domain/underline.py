@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 
 from underlines.common import sqltemplate
+from bs4 import BeautifulSoup
 
-def find_underlines(isbn13):
-    from bs4 import BeautifulSoup
-    from selenium import webdriver
+import requests
 
-    driver = webdriver.Firefox()
-    driver.get("http://www.aladin.co.kr/shop/common/wbook_talktalk.aspx?ISBN={}&CommunityType=Underline".format(isbn13))
-    html = driver.page_source
-
-    soup = BeautifulSoup(html, 'html.parser')
-    rows = soup.select(".p_letter > table > tbody > tr > td > div")
-    underlines = [ row.text.strip() for row in rows if is_valid_underline(row.text)]
-    return underlines
+def find_underlines(isbn):
+    response = requests.get("http://www.aladin.co.kr/shop/common/wbook_talktalk.aspx?ISBN={}&CommunityType=Underline".format(isbn))
+    soup = BeautifulSoup(response.content, 'html5lib', from_encoding='euc-kr')
+    rows = soup.find("div", {"class": "p_letter"})
+    children = rows.findChildren()
+    return [child.text for child in children if child.name == "tbody"]
 
 def is_valid_underline(text):
     return text and not text.strip().isnumeric() and len(text) > 15
